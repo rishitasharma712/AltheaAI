@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Althea: A Veterans Mental Health Support</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Welcome to Althea: A Veterans Mental Health Support</h1>
+
+    <h2>Talk to our assistant</h2>
+    <form id="user_input_form">
+        <textarea id="user_input" rows="4" cols="50" placeholder="Tell us how you're feeling..."></textarea><br><br>
+        <button type="submit">Send</button>
+    </form>
+
+    <h3>Assistant Response:</h3>
+    <p id="answer"></p>
+
+    <h2><a href="/breathing_exercise">Click here for Breathing Exercise</a></h2>
+    <h2><a href="/funny_cat_videos">Click here for Funny Cat Videos!</a></h2>
+    <h2><a href="/funny_dog_videos">Click here for Funny Dog Videos!</a></h2>
+
+    <script>
+        $("#user_input_form").submit(function(event) {
+            event.preventDefault();
+
+            var userInput = $("#user_input").val();
+
+            $.ajax({
+                url: "/chat",
+                method: "POST",
+                contentType: 'application/json',
+                data: JSON.stringify({ user_input: userInput }),
+                success: function(data) {
+                    $("#answer").text(data.response);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
